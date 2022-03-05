@@ -1,8 +1,12 @@
 const express = require('express');
 const minionsRouter = express.Router();
+const { getAllFromDatabase, getFromDatabaseById, addToDatabase, updateInstanceInDatabase, deleteFromDatabasebyId } = require('./db');
+
 
 // Get all minions
-minionsRouter.get('/', (req, res, next) => {})
+minionsRouter.get('/', (req, res, next) => {
+    res.send(getAllFromDatabase('minions'));
+})
 
 // Create new minion
 minionsRouter.post('/', (req, res, next) => {})
