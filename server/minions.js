@@ -32,8 +32,20 @@ minionsRouter.get('/:minionId', (req, res, next) => {
     }
 })
 
-// Updated minion by ID
-minionsRouter.put('/:minionId', (req, res, next) => {})
+// Update minion by ID
+minionsRouter.put('/:minionId', (req, res, next) => {
+    const minionExists = getFromDatabaseById(type, req.params.minionId);
+    if (minionExists) {
+        if (req.body.name && req.body.title && req.body.salary) {
+            const minion = updateInstanceInDatabase(type, req.body);
+            res.send(minion);
+        } else {
+            res.status(400).send('Invalid request');
+        }
+    } else {
+        res.status(404).send('Minion does not exist');
+    }
+})
 
 // Delete minion by ID
 minionsRouter.delete('/:minionId', (req, res, next) => {
