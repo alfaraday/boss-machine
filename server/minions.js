@@ -9,7 +9,15 @@ minionsRouter.get('/', (req, res, next) => {
 })
 
 // Create new minion
-minionsRouter.post('/', (req, res, next) => {})
+minionsRouter.post('/', (req, res, next) => {
+    req.body.salary = Number(req.body.salary);
+    if (req.body.name && req.body.title && req.body.salary) {
+        const newMinion = addToDatabase('minions', req.body);
+        res.status(201).send(newMinion);
+    } else {
+        res.status(400).send('Invalid request');
+    }
+})
 
 // Get minion by ID
 minionsRouter.get('/:minionId', (req, res, next) => {})
