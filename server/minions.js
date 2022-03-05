@@ -36,6 +36,13 @@ minionsRouter.get('/:minionId', (req, res, next) => {
 minionsRouter.put('/:minionId', (req, res, next) => {})
 
 // Delete minion by ID
-minionsRouter.delete('/:minionId', (req, res, next) => {})
+minionsRouter.delete('/:minionId', (req, res, next) => {
+    const deleted = deleteFromDatabasebyId(type, req.params.minionId);
+    if (deleted) {
+        res.status(204).send('Minion deleted');
+    } else {
+        res.status(404).send('Minion does not exist');
+    }
+})
 
 module.exports = minionsRouter;
