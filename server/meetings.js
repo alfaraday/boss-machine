@@ -16,6 +16,13 @@ meetingsRouter.post('/', (req, res, next) => {
 
 
 // Delete all meetings
-meetingsRouter.delete('/', (req, res, next) => {})
+meetingsRouter.delete('/', (req, res, next) => {
+    const deleted = deleteAllFromDatabase(type);
+    if (deleted) {
+        res.status(204).send();
+    } else {
+        res.status(400).send();
+    }
+})
 
 module.exports = meetingsRouter;
