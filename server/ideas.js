@@ -9,6 +9,7 @@ ideasRouter.param('ideaId', (req, res, next, id) => {
     const idea = getFromDatabaseById(type, id);
     if (idea) {
         req.idea = idea;
+        req.ideaId = id;
         next();
     } else {
         res.status(404).send('Idea does not exist');
@@ -50,6 +51,13 @@ ideasRouter.put('/:ideaId', (req, res, next) => {
 })
 
 // Delete idea by ID
-ideasRouter.delete('/:ideaId', (req, res, next) => {})
+ideasRouter.delete('/:ideaId', (req, res, next) => {
+    const deleted = deleteFromDatabasebyId(type, req.ideaId);
+    if (deleted) {
+        res.status(204).send();
+    } else {
+        res.status(400).send();
+    }
+})
 
 module.exports = ideasRouter;
