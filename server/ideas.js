@@ -4,6 +4,17 @@ const { getAllFromDatabase, getFromDatabaseById, addToDatabase, updateInstanceIn
 
 const type = 'ideas';
 
+// Validate idea exists
+ideasRouter.param('ideaId', (req, res, next, id) => {
+    const idea = getFromDatabaseById(type, id);
+    if (idea) {
+        req.idea = idea;
+        next();
+    } else {
+        res.status(404).send('Idea does not exist');
+    }
+})
+
 // Get all ideas
 ideasRouter.get('/', (req, res, next) => {
     res.send(getAllFromDatabase(type));
@@ -22,7 +33,9 @@ ideasRouter.post('/', (req, res, next) => {
 })
 
 // Get idea by ID
-ideasRouter.get('/:ideaId', (req, res, next) => {})
+ideasRouter.get('/:ideaId', (req, res, next) => {
+    res.send(req.idea);
+})
 
 // Updated idea by ID
 ideasRouter.put('/:ideaId', (req, res, next) => {})
