@@ -1,6 +1,6 @@
 const express = require('express');
 const meetingsRouter = express.Router();
-const { getAllFromDatabase, addToDatabase, deleteAllFromDatabase } = require('./db');
+const { getAllFromDatabase, createMeeting, deleteAllFromDatabase } = require('./db');
 
 const type = 'meetings';
 
@@ -10,7 +10,9 @@ meetingsRouter.get('/', (req, res, next) => {
 })
 
 // Create new meeting
-meetingsRouter.post('/', (req, res, next) => {})
+meetingsRouter.post('/', (req, res, next) => {
+    res.status(201).send(createMeeting());
+})
 
 
 // Delete all meetings
