@@ -38,7 +38,16 @@ ideasRouter.get('/:ideaId', (req, res, next) => {
 })
 
 // Updated idea by ID
-ideasRouter.put('/:ideaId', (req, res, next) => {})
+ideasRouter.put('/:ideaId', (req, res, next) => {
+    req.body.numWeeks = Number(req.body.numWeeks);
+    req.body.weeklyRevenue = Number(req.body.weeklyRevenue);
+    if (req.body.description && req.body.name && req.body.numWeeks && req.body.weeklyRevenue) {
+        const updatedIdea = updateInstanceInDatabase(type, req.body);
+        res.send(updatedIdea);
+    } else {
+        res.status(400).send('Invalid request');
+    }
+})
 
 // Delete idea by ID
 ideasRouter.delete('/:ideaId', (req, res, next) => {})
