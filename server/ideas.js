@@ -10,7 +10,16 @@ ideasRouter.get('/', (req, res, next) => {
 })
 
 // Create new idea
-ideasRouter.post('/', (req, res, next) => {})
+ideasRouter.post('/', (req, res, next) => {
+    req.body.numWeeks = Number(req.body.numWeeks);
+    req.body.weeklyRevenue = Number(req.body.weeklyRevenue);
+    if (req.body.description && req.body.name && req.body.numWeeks && req.body.weeklyRevenue) {
+        const newIdea = addToDatabase(type, req.body);
+        res.status(201).send(newIdea);
+    } else {
+        res.status(400).send('Invalid request');
+    }
+})
 
 // Get idea by ID
 ideasRouter.get('/:ideaId', (req, res, next) => {})
